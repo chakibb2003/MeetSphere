@@ -16,22 +16,58 @@ app.use(cors());
 app.use(express.json());
 
 // Routes
-const authRoutes = require('./routes/authRoutes');
-const workspaceRoutes = require('./routes/workspaceRoutes');
-const messageRoutes = require('./routes/messageRoutes');
+const meetingRoutes = require('./routes/meetingRoutes');
+app.use('/api/meetings', meetingRoutes);
 
-app.use('/api/auth', authRoutes);
-app.use('/api/workspaces', workspaceRoutes);
-app.use('/api/messages', messageRoutes);
-
-// Socket.io for WebRTC Signaling
+// Socket.io for WebRTC Signaling and Whiteboard
 io.on('connection', socket => {
-  socket.on('join-room', (roomId, userId) => {
+  socket.on('join-room', (roomId, userDetails) => {
     socket.join(roomId);
-    socket.to(roomId).emit('user-connected', userId);
+    
+    socket.to(roomId).emit('user-connected', userDetails);
 
     socket.on('disconnect', () => {
-      socket.to(roomId).emit('user-disconnected', userId);
+      socket.to(roomId).emit('user-disconnected', userDetails?.peerId);
+    });
+
+    socket.on('draw-start', (data) => {
+      socket.to(roomId).emit('draw-start', data);
+    });
+    
+    socket.on('draw-move', (data) => {
+      socket.to(roomId).emit('draw-move', data);
+    });
+
+    socket.on('draw-end', () => {
+      socket.to(roomId).emit('draw-end');
+    });
+
+    socket.on('sync-board', (data) => {
+      socket.to(roomId).emit('sync-board', data);
+    });
+
+    socket.on('clear-board', () => {
+      socket.to(roomId).emit('clear-board');
+    });
+
+    socket.on('toggle-whiteboard', (isOpen) => {
+      socket.to(roomId).emit('toggle-whiteboard', isOpen);
+    });
+
+    socket.on('request-state', () => {
+      socket.to(roomId).emit('request-state');
+    });
+
+    socket.on('sync-state', (state) => {
+      socket.to(roomId).emit('sync-state', state);
+    });
+
+    socket.on('request-board-state', () => {
+      socket.to(roomId).emit('request-board-state');
+    });
+
+    socket.on('chat-message', (data) => {
+      socket.to(roomId).emit('chat-message', data);
     });
   });
 });

@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
   --color-background: #0F172A;
   --color-secondary: #1E293B;
@@ -14,12 +16,11 @@
 
 @layer base {
   body {
-    background-color: var(--color-background);
-    color: var(--color-textPrimary);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
 }
+
 
 /* Custom scrollbar for dark theme */
 ::-webkit-scrollbar {
