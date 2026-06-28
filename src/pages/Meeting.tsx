@@ -311,7 +311,7 @@ export default function Meeting() {
 
   const participantList = Object.values(participants);
   const gridCols = participantList.length === 1 ? 'grid-cols-1' :
-                   participantList.length <= 2 ? 'grid-cols-1 md:grid-cols-2' :
+                   participantList.length <= 2 ? 'grid-cols-1 sm:grid-cols-2' :
                    participantList.length <= 4 ? 'grid-cols-2' :
                    'grid-cols-2 md:grid-cols-3 lg:grid-cols-4';
 
@@ -351,13 +351,13 @@ export default function Meeting() {
   return (
     <div className={`h-screen flex flex-col font-sans overflow-hidden transition-colors duration-500 ${!isDarkMode ? 'bg-slate-50 text-slate-900' : 'bg-[#0B0F19] text-white'}`}>
       {/* Top Bar */}
-      <div className="h-20 shrink-0 flex items-center justify-between px-6 z-10 pt-2">
-        <div className="flex items-center gap-2 cursor-pointer w-1/3" onClick={leaveMeeting}>
+      <div className="h-16 sm:h-20 shrink-0 flex items-center justify-between px-4 sm:px-6 z-10 pt-2">
+        <div className="flex items-center gap-2 cursor-pointer w-auto sm:w-1/3" onClick={leaveMeeting}>
           <Logo className="w-8 h-6" />
           <span className={`font-bold text-xl hidden sm:block tracking-tight ${!isDarkMode ? 'text-slate-900' : 'text-white'}`}>Meet<span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-emerald-400">Sphere</span></span>
         </div>
         
-        <div className="flex flex-col items-center justify-center w-1/3">
+        <div className="flex flex-col items-center justify-center flex-1 sm:w-1/3">
           <div className={`flex items-center space-x-2 px-4 py-1.5 rounded-full mt-2 cursor-pointer transition-colors ${!isDarkMode ? 'bg-slate-200 hover:bg-slate-300' : 'bg-[#1A2235] hover:bg-[#20293F]'}`} onClick={copyCode}>
             <span className={`font-mono text-xs font-semibold ${!isDarkMode ? 'text-slate-700' : 'text-slate-200'}`}>{meetingCode}</span>
             <div className={`${!isDarkMode ? 'text-slate-500 hover:text-slate-800' : 'text-slate-400 hover:text-white'} transition-colors`} title="Copy Code">
@@ -370,7 +370,7 @@ export default function Meeting() {
           </div>
         </div>
 
-        <div className="flex items-center justify-end gap-3 w-1/3">
+        <div className="hidden md:flex items-center justify-end gap-3 w-1/3">
           <button onClick={() => { setShowParticipants(!showParticipants); setShowChat(false); }} className={`flex items-center gap-1.5 transition-colors px-3 py-2 rounded-xl text-xs font-medium ${!isDarkMode ? 'bg-slate-200 hover:bg-slate-300 text-slate-700' : 'bg-[#1A2235] hover:bg-[#20293F] text-slate-300'}`}>
              <Users size={16} /> {participantList.length}
           </button>
@@ -388,7 +388,7 @@ export default function Meeting() {
 
       {/* Center Layout Container */}
       <div className="flex-1 overflow-hidden flex relative">
-        <div className={`flex-1 p-4 md:p-6 overflow-hidden flex ${showWhiteboard ? 'flex-col' : 'items-stretch'} justify-center relative gap-4 transition-all duration-300 ${(showParticipants || showChat) ? 'mr-80' : ''}`}>
+        <div className={`flex-1 p-2 sm:p-4 md:p-6 overflow-hidden flex ${showWhiteboard ? 'flex-col' : 'items-stretch'} justify-center relative gap-4 transition-all duration-300 ${(showParticipants || showChat) ? 'sm:mr-80' : ''}`}>
           
           {/* Layout Area */}
           {showWhiteboard ? (
@@ -437,7 +437,7 @@ export default function Meeting() {
         </div>
 
         {/* Unified Sidebar */}
-        <div className={`absolute top-0 right-0 h-full w-80 shadow-2xl transition-transform duration-300 transform ${(showParticipants || showChat) ? 'translate-x-0' : 'translate-x-full'} ${!isDarkMode ? 'bg-white border-l border-slate-200 text-slate-900' : 'bg-[#121826] border-l border-slate-800/50 text-white'} z-20 flex flex-col`}>
+        <div className={`absolute top-0 right-0 h-full w-full sm:w-80 shadow-2xl transition-transform duration-300 transform ${(showParticipants || showChat) ? 'translate-x-0' : 'translate-x-full'} ${!isDarkMode ? 'bg-white border-l border-slate-200 text-slate-900' : 'bg-[#121826] border-l border-slate-800/50 text-white'} z-30 flex flex-col`}>
           {showParticipants ? (
             <>
               <div className={`p-4 border-b flex justify-between items-center ${!isDarkMode ? 'border-slate-200' : 'border-slate-800/50'}`}>
@@ -515,7 +515,7 @@ export default function Meeting() {
       </div>
 
       {/* Bottom Controls */}
-      <div className={`pb-6 pt-2 shrink-0 flex flex-col items-center justify-center z-10 relative ${(showParticipants || showChat) ? 'mr-80' : ''} transition-all duration-300`}>
+      <div className={`pb-4 sm:pb-6 pt-2 shrink-0 flex flex-col items-center justify-center z-10 relative ${(showParticipants || showChat) ? 'sm:mr-80' : ''} transition-all duration-300 w-full`}>
         <div 
           onClick={() => { setShowParticipants(!showParticipants); setShowChat(false); }}
           className={`text-[11px] font-medium mb-3 flex items-center gap-1 cursor-pointer transition-colors ${!isDarkMode ? 'text-slate-500 hover:text-slate-700' : 'text-slate-400 hover:text-slate-300'}`}
@@ -524,35 +524,35 @@ export default function Meeting() {
           <ChevronUp size={12} className={`transition-transform duration-300 ${showParticipants ? 'rotate-180' : ''}`} />
         </div>
         
-        <div className={`rounded-[2rem] p-2 flex items-center gap-1 shadow-2xl border ${!isDarkMode ? 'bg-white border-slate-200' : 'bg-[#1A2235] border-slate-800/50'}`}>
+        <div className={`rounded-3xl sm:rounded-[2rem] p-1.5 sm:p-2 flex items-center gap-1 shadow-2xl border max-w-[96vw] overflow-x-auto scrollbar-hide ${!isDarkMode ? 'bg-white border-slate-200' : 'bg-[#1A2235] border-slate-800/50'}`}>
           <button 
             onClick={toggleMic}
-            className={`w-16 h-16 rounded-2xl flex flex-col items-center justify-center gap-1 transition-colors group ${!isDarkMode ? 'hover:bg-slate-100' : 'hover:bg-slate-800/50'}`}
+            className={`min-w-[56px] h-12 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl flex flex-col items-center justify-center gap-1 transition-colors group ${!isDarkMode ? 'hover:bg-slate-100' : 'hover:bg-slate-800/50'}`}
           >
-            <div className={`p-2.5 rounded-full transition-colors ${!isMicOn ? 'bg-slate-100 text-red-500' : !isDarkMode ? 'bg-slate-100 text-slate-700 group-hover:bg-slate-200' : 'text-slate-300 group-hover:text-white'}`}>
-              {isMicOn ? <Mic size={18} /> : <MicOff size={18} />}
+            <div className={`p-2 sm:p-2.5 rounded-full transition-colors ${!isMicOn ? 'bg-slate-100 text-red-500' : !isDarkMode ? 'bg-slate-100 text-slate-700 group-hover:bg-slate-200' : 'text-slate-300 group-hover:text-white'}`}>
+              {isMicOn ? <Mic size={16} className="sm:w-[18px] sm:h-[18px]" /> : <MicOff size={16} className="sm:w-[18px] sm:h-[18px]" />}
             </div>
-            <span className={`text-[10px] font-medium ${!isDarkMode ? 'text-slate-500 group-hover:text-slate-700' : 'text-slate-400 group-hover:text-slate-300'}`}>Mic</span>
+            <span className={`hidden sm:block text-[10px] font-medium ${!isDarkMode ? 'text-slate-500 group-hover:text-slate-700' : 'text-slate-400 group-hover:text-slate-300'}`}>Mic</span>
           </button>
 
           <button 
             onClick={toggleCamera}
-            className={`w-16 h-16 rounded-2xl flex flex-col items-center justify-center gap-1 transition-colors group ${!isDarkMode ? 'hover:bg-slate-100' : 'hover:bg-slate-800/50'}`}
+            className={`min-w-[56px] h-12 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl flex flex-col items-center justify-center gap-1 transition-colors group ${!isDarkMode ? 'hover:bg-slate-100' : 'hover:bg-slate-800/50'}`}
           >
-            <div className={`p-2.5 rounded-full transition-colors ${!isCameraOn ? 'bg-slate-100 text-red-500' : !isDarkMode ? 'bg-slate-100 text-slate-700 group-hover:bg-slate-200' : 'text-slate-300 group-hover:text-white'}`}>
-              {isCameraOn ? <Video size={18} /> : <VideoOff size={18} />}
+            <div className={`p-2 sm:p-2.5 rounded-full transition-colors ${!isCameraOn ? 'bg-slate-100 text-red-500' : !isDarkMode ? 'bg-slate-100 text-slate-700 group-hover:bg-slate-200' : 'text-slate-300 group-hover:text-white'}`}>
+              {isCameraOn ? <Video size={16} className="sm:w-[18px] sm:h-[18px]" /> : <VideoOff size={16} className="sm:w-[18px] sm:h-[18px]" />}
             </div>
-            <span className={`text-[10px] font-medium ${!isDarkMode ? 'text-slate-500 group-hover:text-slate-700' : 'text-slate-400 group-hover:text-slate-300'}`}>Camera</span>
+            <span className={`hidden sm:block text-[10px] font-medium ${!isDarkMode ? 'text-slate-500 group-hover:text-slate-700' : 'text-slate-400 group-hover:text-slate-300'}`}>Camera</span>
           </button>
 
           <button 
             onClick={toggleScreenShare}
-            className={`w-16 h-16 rounded-2xl flex flex-col items-center justify-center gap-1 transition-colors group ${!isDarkMode ? 'hover:bg-slate-100' : 'hover:bg-slate-800/50'}`}
+            className={`min-w-[56px] h-12 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl flex flex-col items-center justify-center gap-1 transition-colors group ${!isDarkMode ? 'hover:bg-slate-100' : 'hover:bg-slate-800/50'}`}
           >
-            <div className={`p-2.5 rounded-full transition-colors ${isScreenSharing ? 'bg-blue-500 text-white' : !isDarkMode ? 'bg-slate-100 text-slate-700 group-hover:bg-slate-200' : 'text-slate-300 group-hover:text-white'}`}>
-              <MonitorUp size={18} />
+            <div className={`p-2 sm:p-2.5 rounded-full transition-colors ${isScreenSharing ? 'bg-blue-500 text-white' : !isDarkMode ? 'bg-slate-100 text-slate-700 group-hover:bg-slate-200' : 'text-slate-300 group-hover:text-white'}`}>
+              <MonitorUp size={16} className="sm:w-[18px] sm:h-[18px]" />
             </div>
-            <span className={`text-[10px] font-medium ${!isDarkMode ? 'text-slate-500 group-hover:text-slate-700' : 'text-slate-400 group-hover:text-slate-300'}`}>Screen</span>
+            <span className={`hidden sm:block text-[10px] font-medium ${!isDarkMode ? 'text-slate-500 group-hover:text-slate-700' : 'text-slate-400 group-hover:text-slate-300'}`}>Screen</span>
           </button>
 
           <button 
@@ -561,43 +561,43 @@ export default function Meeting() {
               setShowWhiteboard(newState);
               socket?.emit('toggle-whiteboard', newState);
             }}
-            className={`w-16 h-16 rounded-2xl flex flex-col items-center justify-center gap-1 transition-colors group ${!isDarkMode ? 'hover:bg-slate-100' : 'hover:bg-slate-800/50'}`}
+            className={`min-w-[56px] h-12 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl flex flex-col items-center justify-center gap-1 transition-colors group ${!isDarkMode ? 'hover:bg-slate-100' : 'hover:bg-slate-800/50'}`}
           >
-            <div className={`p-2.5 rounded-full transition-colors ${showWhiteboard ? 'bg-blue-100 text-blue-600' : !isDarkMode ? 'bg-slate-100 text-slate-700 group-hover:bg-slate-200' : 'text-slate-300 group-hover:text-white'}`}>
-              <PenTool size={18} />
+            <div className={`p-2 sm:p-2.5 rounded-full transition-colors ${showWhiteboard ? 'bg-blue-100 text-blue-600' : !isDarkMode ? 'bg-slate-100 text-slate-700 group-hover:bg-slate-200' : 'text-slate-300 group-hover:text-white'}`}>
+              <PenTool size={16} className="sm:w-[18px] sm:h-[18px]" />
             </div>
-            <span className={`text-[10px] font-medium ${showWhiteboard ? 'text-blue-600' : !isDarkMode ? 'text-slate-500 group-hover:text-slate-700' : 'text-slate-400 group-hover:text-slate-300'}`}>Whiteboard</span>
+            <span className={`hidden sm:block text-[10px] font-medium ${showWhiteboard ? 'text-blue-600' : !isDarkMode ? 'text-slate-500 group-hover:text-slate-700' : 'text-slate-400 group-hover:text-slate-300'}`}>Whiteboard</span>
           </button>
 
           <button 
             onClick={() => { setShowParticipants(!showParticipants); setShowChat(false); }} 
-            className={`w-16 h-16 rounded-2xl flex flex-col items-center justify-center gap-1 transition-colors group relative ${!isDarkMode ? 'hover:bg-slate-100' : 'hover:bg-slate-800/50'}`}
+            className={`min-w-[56px] h-12 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl flex flex-col items-center justify-center gap-1 transition-colors group relative ${!isDarkMode ? 'hover:bg-slate-100' : 'hover:bg-slate-800/50'}`}
           >
-            <div className={`p-2.5 rounded-full transition-colors relative ${showParticipants ? 'bg-blue-100 text-blue-600' : !isDarkMode ? 'bg-slate-100 text-slate-700 group-hover:bg-slate-200' : 'text-slate-300 group-hover:text-white'}`}>
-              <Users size={18} />
-              <div className="absolute top-1 -right-1 bg-blue-500 text-[9px] font-bold px-1.5 py-0.5 rounded-full text-white">{participantList.length}</div>
+            <div className={`p-2 sm:p-2.5 rounded-full transition-colors relative ${showParticipants ? 'bg-blue-100 text-blue-600' : !isDarkMode ? 'bg-slate-100 text-slate-700 group-hover:bg-slate-200' : 'text-slate-300 group-hover:text-white'}`}>
+              <Users size={16} className="sm:w-[18px] sm:h-[18px]" />
+              <div className="absolute -top-1 -right-1 sm:top-1 sm:-right-1 bg-blue-500 text-[9px] font-bold px-1.5 py-0.5 rounded-full text-white">{participantList.length}</div>
             </div>
-            <span className={`text-[10px] font-medium ${showParticipants ? 'text-blue-600' : !isDarkMode ? 'text-slate-500 group-hover:text-slate-700' : 'text-slate-400 group-hover:text-slate-300'}`}>Participants</span>
+            <span className={`hidden sm:block text-[10px] font-medium ${showParticipants ? 'text-blue-600' : !isDarkMode ? 'text-slate-500 group-hover:text-slate-700' : 'text-slate-400 group-hover:text-slate-300'}`}>Participants</span>
           </button>
 
           <button 
             onClick={toggleTheme} 
-            className={`w-16 h-16 rounded-2xl flex flex-col items-center justify-center gap-1 transition-colors group ${!isDarkMode ? 'hover:bg-slate-100' : 'hover:bg-slate-800/50'}`}
+            className={`min-w-[56px] h-12 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl flex flex-col items-center justify-center gap-1 transition-colors group ${!isDarkMode ? 'hover:bg-slate-100' : 'hover:bg-slate-800/50'}`}
           >
-            <div className={`p-2.5 rounded-full transition-colors ${!isDarkMode ? 'bg-slate-100 text-slate-700 group-hover:bg-slate-200' : 'text-slate-300 group-hover:text-white'}`}>
-              {isDarkMode ? <Sun size={18} /> : <Moon size={18} />}
+            <div className={`p-2 sm:p-2.5 rounded-full transition-colors ${!isDarkMode ? 'bg-slate-100 text-slate-700 group-hover:bg-slate-200' : 'text-slate-300 group-hover:text-white'}`}>
+              {isDarkMode ? <Sun size={16} className="sm:w-[18px] sm:h-[18px]" /> : <Moon size={16} className="sm:w-[18px] sm:h-[18px]" />}
             </div>
-            <span className={`text-[10px] font-medium ${!isDarkMode ? 'text-slate-500 group-hover:text-slate-700' : 'text-slate-400 group-hover:text-slate-300'}`}>{isDarkMode ? 'Light' : 'Dark'} Mode</span>
+            <span className={`hidden sm:block text-[10px] font-medium ${!isDarkMode ? 'text-slate-500 group-hover:text-slate-700' : 'text-slate-400 group-hover:text-slate-300'}`}>{isDarkMode ? 'Light' : 'Dark'} Mode</span>
           </button>
 
-          <div className={`w-px h-8 mx-1 ${!isDarkMode ? 'bg-slate-200' : 'bg-slate-800'}`}></div>
+          <div className={`w-px h-6 sm:h-8 mx-0.5 sm:mx-1 ${!isDarkMode ? 'bg-slate-200' : 'bg-slate-800'}`}></div>
 
           <button 
             onClick={leaveMeeting}
-            className="w-[72px] h-14 rounded-[1.25rem] flex flex-col items-center justify-center gap-0.5 transition-colors bg-red-500 hover:bg-red-600 text-white ml-1 mr-1"
+            className="min-w-[60px] h-10 sm:w-[72px] sm:h-14 rounded-[1rem] sm:rounded-[1.25rem] flex flex-col items-center justify-center gap-0.5 transition-colors bg-red-500 hover:bg-red-600 text-white ml-0.5 sm:ml-1 mr-0.5 sm:mr-1"
           >
-            <PhoneOff size={16} className="mt-0.5" />
-            <span className="text-[10px] font-bold">Leave</span>
+            <PhoneOff size={16} className="sm:w-[16px] sm:h-[16px]" />
+            <span className="hidden sm:block text-[10px] font-bold">Leave</span>
           </button>
         </div>
       </div>
