@@ -195,6 +195,7 @@ export default function Meeting() {
     if (myVideoRef.current && myStream) {
       if (myVideoRef.current.srcObject !== myStream) {
         myVideoRef.current.srcObject = myStream;
+        myVideoRef.current.play().catch(e => console.error("Local play blocked:", e));
       }
     }
   }, [myStream, participants, pinnedParticipantId, showWhiteboard]);
@@ -611,6 +612,7 @@ const VideoComponent = ({ stream, isMain }: { stream?: MediaStream, isMain?: boo
     if (videoRef.current && stream) {
       if (videoRef.current.srcObject !== stream) {
         videoRef.current.srcObject = stream;
+        videoRef.current.play().catch(e => console.error("Remote play blocked:", e));
       }
     }
   }, [stream]);
