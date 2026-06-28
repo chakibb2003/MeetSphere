@@ -98,7 +98,14 @@ export default function Meeting() {
     const newPeer = new Peer(undefined as any, {
       host: import.meta.env.VITE_PEER_HOST || '0.peerjs.com',
       port: 443,
-      secure: true
+      secure: true,
+      config: {
+        iceServers: [
+          { urls: 'stun:stun.l.google.com:19302' },
+          { urls: 'stun:stun1.l.google.com:19302' },
+          { urls: 'stun:stun.cloudflare.com:3478' }
+        ]
+      }
     });
     setPeer(newPeer);
 
@@ -125,6 +132,7 @@ export default function Meeting() {
       if (stream) streamsRef.current[id] = stream;
 
       newSocket.on('user-connected', (userDetails: any) => {
+        setParticipants(prev => ({ ...prev, [userDetails.peerId]: userDetails }));
         if (stream) {
           const call = newPeer.call(userDetails.peerId, stream, { metadata: { name, color } });
           call.on('stream', (userVideoStream) => {
@@ -185,7 +193,9 @@ export default function Meeting() {
 
   useEffect(() => {
     if (myVideoRef.current && myStream) {
-      myVideoRef.current.srcObject = myStream;
+      if (myVideoRef.current.srcObject !== myStream) {
+        myVideoRef.current.srcObject = myStream;
+      }
     }
   }, [myStream, participants, pinnedParticipantId, showWhiteboard]);
 
@@ -599,7 +609,9 @@ const VideoComponent = ({ stream, isMain }: { stream?: MediaStream, isMain?: boo
 
   useEffect(() => {
     if (videoRef.current && stream) {
-      videoRef.current.srcObject = stream;
+      if (videoRef.current.srcObject !== stream) {
+        videoRef.current.srcObject = stream;
+      }
     }
   }, [stream]);
 
