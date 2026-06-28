@@ -581,6 +581,16 @@ export default function Meeting() {
           </button>
 
           <button 
+            onClick={() => { setShowChat(!showChat); setShowParticipants(false); }} 
+            className={`min-w-[56px] h-12 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl flex flex-col items-center justify-center gap-1 transition-colors group ${!isDarkMode ? 'hover:bg-slate-100' : 'hover:bg-slate-800/50'}`}
+          >
+            <div className={`p-2 sm:p-2.5 rounded-full transition-colors ${showChat ? 'bg-blue-100 text-blue-600' : !isDarkMode ? 'bg-slate-100 text-slate-700 group-hover:bg-slate-200' : 'text-slate-300 group-hover:text-white'}`}>
+              <MessageSquare size={16} className="sm:w-[18px] sm:h-[18px]" />
+            </div>
+            <span className={`hidden sm:block text-[10px] font-medium ${showChat ? 'text-blue-600' : !isDarkMode ? 'text-slate-500 group-hover:text-slate-700' : 'text-slate-400 group-hover:text-slate-300'}`}>Chat</span>
+          </button>
+
+          <button 
             onClick={toggleTheme} 
             className={`min-w-[56px] h-12 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl flex flex-col items-center justify-center gap-1 transition-colors group ${!isDarkMode ? 'hover:bg-slate-100' : 'hover:bg-slate-800/50'}`}
           >
